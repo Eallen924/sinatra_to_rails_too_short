@@ -1,29 +1,35 @@
 class UsersController < ApplicationController
   
   def create
-    # here we accept params from the user create form
-    # creating user here ?
+    @user = User.new(params[:user])
+    @user.password_confirmation = params[:user][:password]
+    if @user.save
+      session[:user_id] = @user.id
+      render 'show'
+    else
+      render 'new'
+    end
   end
 
   def new
-    #this is where we need @user
+    @user = User.new
   end
 
   def edit
-    #this is where we need @user
+    @user = User.find(params[:id])
   end
 
   def show
-    #this is where we need @user
+    @user = User.find(params[:id])
   end
 
   def update
-    # here we accept params from user info form
-    # update user here?
+    @user = User.update(params[:user)
+    render 'show'
   end
 
   def destroy
-    #this is where we need @user
+    User.find(params[:id]).destroy
+    render 'index/index'
   end
-
 end
