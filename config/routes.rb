@@ -1,5 +1,10 @@
 TooShort::Application.routes.draw do
-  resources :user
+  resources :users
+
+  resources :urls, :only => [:show, :create, :destroy]
+
+  resources :favorite_urls, :only => [:create, :destroy]
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
