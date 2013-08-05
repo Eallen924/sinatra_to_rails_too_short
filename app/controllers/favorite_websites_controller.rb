@@ -1,0 +1,3 @@
+class FavoriteWebsitesController < ApplicationController
+  
+end
