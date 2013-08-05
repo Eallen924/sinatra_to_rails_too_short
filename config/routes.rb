@@ -1,4 +1,5 @@
 TooShort::Application.routes.draw do
+  resources :user
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
