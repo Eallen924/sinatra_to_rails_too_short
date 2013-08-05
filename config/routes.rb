@@ -4,6 +4,14 @@ TooShort::Application.routes.draw do
   resources :urls
 
   resources :favorite_urls
+
+  resource :index
+
+  get '/login' => 'sessions#new'
+
+  post '/login' => 'sessions#create'
+
+  delete '/logout' => 'sessions#destroy', :via => :delete
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
