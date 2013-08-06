@@ -24,8 +24,12 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.update(params[:user)
-    render 'show'
+    p params[:user]
+    puts "*" * 80
+    user = User.find(params[:id])
+    @user = user.update_attributes(params[:user])
+    flash[:success] = "Account Update Successful!"
+    redirect_to root_path
   end
 
   def destroy

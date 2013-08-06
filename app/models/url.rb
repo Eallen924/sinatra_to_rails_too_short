@@ -1,4 +1,6 @@
 class Url < ActiveRecord::Base
+  attr_accessible :original_url, :shortened_url, :description, :clicks
+
   validates :original_url, :uniqueness => true
   validate  :valid_url_syntax
   validate  :valid_url
@@ -6,15 +8,15 @@ class Url < ActiveRecord::Base
   validates :description, :presence => true
   
   has_many  :favorite_websites
-  has_many  :admirers, :class_name => "User", :through => :favorite_websites, :dependent => :destroy
+  has_many  :admirers, :source => :user, :through => :favorite_websites, :dependent => :destroy
 
   include SecureRandom 
 
   def self.shorten(params)
     short_url = SecureRandom.hex(3)
-    Url.new(:original_url => params[:url][:original_url],
+    Url.new(:original_url => params[:original_url],
             :shortened_url => short_url,
-            :description => params[:url][:description])
+            :description => params[:description])
   end
 
   def valid_url_syntax

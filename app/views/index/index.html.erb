@@ -1,3 +1,41 @@
-<%= form_for @url do |f| %>
- Make it Short:<%= f.text_field :original_url %>
+<% if current_user %>
+  <%= button_to "Log out", logout_path, { method: :delete} %>
+  <%= link_to "Edit Profile", edit_user_path(current_user.id) %>
+
+    <%= form_for @url do |f| %>
+    Make it Short:<%= f.text_field :original_url %>
+    Description:<%= f.text_field :description %>
+    <%=  f.submit "Shortr"  %>
+   <% end %>
+   <% if flash %>
+      <% flash.each do |flash_type, msg| %>
+        <ul>
+          <li> <%=flash_type.capitalize%>: <%= msg  %></li>
+        </ul>
+      <% end %>
+    <% end %>
+   <% if @urls %>
+   <table>
+    <tr>
+     <th>Original Link</th>
+     <th>Description</th>
+     <th>ShortR Link</th>
+     <th>Clicks</th>
+     <th>Delete</th>
+    </tr>
+   <% @urls.each do |url| %>
+    <tr>
+      <td><%= url.original_url %></td>
+      <td><%= url.description %></td>
+      <td><%= link_to "http://shortr/" + url.shortened_url, url_path(url.shortened_url) %></td>
+      <td><%= url.clicks %></td>
+      <td><%= button_to "Delete", url_path(url), { method: :delete }%></td>
+    <tr>
+    <% end %>
+   </table>
+   <% end %>
+<% else %>
+  <%= link_to "Login", login_path %>
+  <%= link_to "Join", new_user_path %>
 <% end %>
+
